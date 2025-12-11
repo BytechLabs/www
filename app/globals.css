@@ -1,26 +1,394 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ===================================
+   RENAISSANCE FUTURISM DESIGN SYSTEM
+   "Paper & Ink" Palette + Museum Glass
+   PREMIUM POLISH VERSION
+   =================================== */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* BROWN PARCHMENT - authentic vintage paper */
+    --parchment: #E8DCC4;
+    --ink: #0C0C0C;
+    --charcoal: #1A1A1A;
+    --off-white: #E5E5E5;
+    --alert-red: #F87171;
+    --success-green: #34D399;
+    --link-blue: #3B82F6;
+    --background: var(--ink);
+    --foreground: var(--off-white);
   }
 }
 
+/* ===================================
+   GLOBAL STYLES - PREMIUM POLISH
+   =================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #050505;
+  /* Deep black/ink */
+  color: #e5e5e5;
+  /* Off-white parchment text */
+  font-family: var(--font-serif);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+
+  /* CRITICAL: Font smoothing for "Ink" look */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Default cursor */
+  cursor: auto;
+}
+
+/* ===================================
+   GLOBAL NOISE OVERLAY - FINE FILM GRAIN
+   Subtle, high-fidelity texture
+   =================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* 
+     High-frequency noise (0.8) with low octaves (3)
+     Explicit 128px size tile to prevent browser scaling (dot resizing)
+  */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  /* CRITICAL: Prevents stretching/scaling dots */
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Secondary layer for complex texture (softer) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise2)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.05;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 49;
+}
+
+/* ===================================
+   VIGNETTE - Enhanced for Paper Feel
+   =================================== */
+
+.vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center,
+      transparent 0%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.25) 100%);
+  pointer-events: none;
+  z-index: 48;
+}
+
+/* ===================================
+   TYPOGRAPHY - "INK" RENDERING
+   =================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-cormorant, Georgia, serif);
+  font-weight: 600;
+  line-height: 1.2;
+
+  /* Optical tracking for serif - TIGHT */
+  letter-spacing: -0.03em;
+
+  /* Enable ligatures for elegant letter connections */
+  font-variant-ligatures: common-ligatures discretionary-ligatures;
+
+  /* Old-style numerals for vintage dates */
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* Fluid Typography with clamp() */
+h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+p {
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-jetbrains, 'Courier New', monospace);
+}
+
+/* Small labels - Technical schematic style */
+.label,
+.uppercase-label {
+  font-family: var(--font-jetbrains, 'Courier New', monospace);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: clamp(0.625rem, 1vw, 0.75rem);
+}
+
+/* ===================================
+   USER SELECT CONTROL
+   =================================== */
+
+/* Prevent selection on UI elements */
+button,
+a,
+nav,
+svg,
+.ornament,
+.decorative,
+[role="img"],
+[role="button"],
+.museum-glass,
+.bento-grid-label {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Allow selection only on content */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+article,
+main {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ===================================
+   CUSTOM SELECTION COLOR - "Red Ink"
+   =================================== */
+
+::selection {
+  background: var(--parchment);
+  color: var(--ink);
+}
+
+::-moz-selection {
+  background: var(--parchment);
+  color: var(--ink);
+}
+
+/* ===================================
+   CUSTOM SCROLLBAR - Premium Integrated
+   =================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #050505;
+  /* Black Track */
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  /* Dark Grey Thumb */
+  border: 2px solid #050505;
+  /* Border to create padding effect */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8c7b64;
+  /* Da Vinci Gold on Hover */
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background-color: #333;
+  }
+}
+
+/* ===================================
+   MUSEUM GLASS - LAYERED SHADOWS & HIGHLIGHTS
+   =================================== */
+
+.museum-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  /* Subtle border - NOT solid grey */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  /* Layered shadow for depth */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.museum-glass:hover {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.08),
+    0 4px 6px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.museum-glass-dark {
+  background: rgba(12, 12, 12, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================
+   INTERACTIVE ELEMENTS - SMOOTH PHYSICS
+   =================================== */
+
+button,
+a,
+[role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active state - "Press" feedback */
+button:active,
+a:active,
+[role="button"]:active {
+  transform: scale(0.95);
+}
+
+/* ===================================
+   UTILITY CLASSES
+   =================================== */
+
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Breathing glow for idle states */
+@keyframes breathing-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.breathing-glow {
+  animation: breathing-glow 4s ease-in-out infinite;
+}
+
+/* ===================================
+   CUSTOM CURSOR - Blending Mode
+   =================================== */
+
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  color: white;
+  transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
+}
+
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+}
+
+.custom-cursor.click {
+  transform: scale(0.8);
+}
+
+/* ===================================
+   SCROLL PROGRESS LINE
+   =================================== */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: var(--alert-red);
+  z-index: 100;
+  transform-origin: left;
+}
+
+/* ===================================
+   DECORATIVE ELEMENTS - NON-SELECTABLE
+   =================================== */
+
+/* Prevent selection of ornaments, measurements, and diagrams */
+svg,
+[class*="ornament"],
+[class*="measurement"],
+[class*="folio"],
+[class*="annotation"],
+[class*="reference"],
+.vignette {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
