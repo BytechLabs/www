@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, JetBrains_Mono, Libre_Baskerville } from "next/font/google"; // [MODIFIED] Switched to Serif
 import "./globals.css";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { NavigationSystem } from "@/components/layout/NavigationSystem";
 import { Footer } from "@/components/layout/Footer";
+import { DevTools } from "@/components/DevTools";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -18,6 +20,12 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
+const libre = Libre_Baskerville({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-libre",
+});
+
 export const metadata: Metadata = {
   title: "BytechLabs | Enterprise Software Architecture",
   description: "Premier software development agency building high-performance applications and secure infrastructure for global enterprises.",
@@ -29,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${cormorant.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`dark ${cormorant.variable} ${jetbrains.variable} ${libre.variable}`} suppressHydrationWarning>
       <body>
         <div className="vignette" />
         <ScrollProgress />
@@ -41,6 +49,8 @@ export default function RootLayout({
           {children}
           <Footer />
         </SmoothScroll>
+        <DevTools />
+        <CookieConsent />
       </body>
     </html>
   );

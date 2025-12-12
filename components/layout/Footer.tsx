@@ -16,7 +16,7 @@ export function Footer() {
                     <div className="flex flex-col gap-2">
                         <span className="font-serif text-2xl text-[#e5e5e5]">BytechLabs</span>
                         <span className="font-mono text-[10px] text-[#666] uppercase tracking-widest">
-                            Renaissance Futurism
+                            Enterprise Architecture
                         </span>
                     </div>
 
@@ -50,40 +50,15 @@ export function Footer() {
 
                 {/* Divider / Signature Area */}
                 <div className="mt-16 pt-8 border-t border-[#111] flex flex-col md:flex-row justify-between items-center gap-4">
-                    <span className="font-mono text-[10px] text-[#444]">
-                        © 2024 BytechLabs. All Rights Reserved.
-                    </span>
-
-                    {/* Easter Egg: The Maker's Mark */}
-                    <button
-                        onClick={() => setShowSignature(!showSignature)}
-                        className="group relative"
-                    >
-                        <AnimatePresence mode="wait">
-                            {showSignature ? (
-                                <motion.span
-                                    key="signature"
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className="font-serif italic text-lg text-[#8c7b64]"
-                                >
-                                    Leonardo
-                                </motion.span>
-                            ) : (
-                                <motion.div
-                                    key="mark"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className="w-6 h-6 border border-[#222] rotate-45 group-hover:border-[#8c7b64]/50 group-hover:rotate-90 transition-all duration-700"
-                                />
-                            )}
-                        </AnimatePresence>
-                    </button>
+                    <div className="flex flex-col md:flex-row gap-6 items-center">
+                        <span className="font-mono text-[10px] text-[#444]">
+                            © {new Date().getFullYear()} BytechLabs. All Rights Reserved.
+                        </span>
+                        <a href="/privacy" className="font-mono text-[10px] text-[#333] hover:text-[#666]">Privacy Policy</a>
+                        <a href="/terms" className="font-mono text-[10px] text-[#333] hover:text-[#666]">Terms of Service</a>
+                    </div>
                 </div>
-
             </Container>
-        </footer>
+        </footer >
     );
 }

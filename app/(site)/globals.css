@@ -18,6 +18,9 @@
     --alert-red: #F87171;
     --success-green: #34D399;
     --link-blue: #3B82F6;
+    --font-sans: var(--font-libre);
+    --font-serif: var(--font-cormorant);
+    --font-mono: var(--font-jetbrains);
     --background: var(--ink);
     --foreground: var(--off-white);
   }
@@ -391,4 +394,39 @@ svg,
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+/* Shine Effect - Premium Gleam */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
+  transform: translateX(-150%) skewX(-15deg);
+  pointer-events: none;
+}
+
+.shine-effect:hover::after {
+  animation: shine 0.35s ease-in-out;
 }

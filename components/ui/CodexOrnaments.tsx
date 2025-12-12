@@ -24,7 +24,7 @@ export function FolioNumber({ number, position = "top-right", className }: Folio
             positionStyles[position],
             className
         )}>
-            Folio {number}
+            REF. {number}
         </div>
     );
 }

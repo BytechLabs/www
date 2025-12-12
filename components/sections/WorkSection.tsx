@@ -38,8 +38,8 @@ export function WorkSection() {
                         transition={{ delay: 0.1 }}
                         className="font-serif text-5xl sm:text-6xl text-[#e5e5e5] leading-tight"
                     >
-                        Gallery of <br />
-                        <span className="italic text-[#666]">Inventions</span>
+                        Select <br />
+                        <span className="italic text-[#666]">Case Studies</span>
                     </motion.h2>
                 </div>
 
@@ -82,7 +82,7 @@ export function WorkSection() {
                             transition={{ delay: 1 }}
                             className="font-serif italic text-[#888] group-hover:text-[#e5e5e5] transition-colors"
                         >
-                            View Full Archives
+                            View All Projects
                         </motion.span>
                         <motion.div
                             initial={{ height: 0 }}

@@ -18,7 +18,7 @@ async function getWork() {
 }
 
 export const metadata = {
-    title: "Selected Work | BytechLabs",
+    title: "Our Work | BytechLabs",
     description: "Case studies in enterprise architecture, high-performance systems, and digital transformation.",
 };
 
@@ -40,14 +40,19 @@ export default async function WorkPage() {
 
                 {/* Header */}
                 <div className="space-y-6">
-                    <Breadcrumbs />
+                    <div className="flex justify-between items-start">
+                        <Breadcrumbs />
+                        <a href="/contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border border-[#8c7b64]/30 rounded-full text-[#8c7b64] font-mono text-xs hover:bg-[#8c7b64] hover:text-[#111] transition-colors">
+                            <span>START A PROJECT</span>
+                        </a>
+                    </div>
                     <div className="flex items-end gap-6 border-b border-off-white/10 pb-8">
                         <h1 className="font-serif text-6xl sm:text-8xl text-off-white">Selected Work</h1>
                         <span className="font-mono text-xs text-off-white/30 mb-4 hidden sm:block">
                             [ARCHIVE_VOL_2]
                         </span>
                     </div>
-                    <p className="font-mono text-off-white/60 max-w-2xl text-lg pl-2 border-l border-off-white/20">
+                    <p className="font-sans text-off-white/80 max-w-2xl text-lg pl-2 border-l border-off-white/20 leading-relaxed">
                         Case studies in enterprise architecture, high-performance systems, and digital transformation.
                     </p>
                 </div>

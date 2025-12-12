@@ -31,6 +31,25 @@ async function getWorkItem(slug: string) {
     return { ...item, content };
 }
 
+async function getOtherWork(currentSlug: string) {
+    const reader = createReader(process.cwd(), keystaticConfig);
+    const allSlugs = await reader.collections.work.list();
+
+    // Filter out current item and shuffle slugs first (avoid reading all files)
+    const otherSlugs = allSlugs
+        .filter(slug => slug !== currentSlug)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 2);
+
+    // Parallel fetch only the needed items
+    const otherWork = await Promise.all(otherSlugs.map(async (slug) => {
+        const entry = await reader.collections.work.read(slug);
+        return { slug, entry: entry! };
+    }));
+
+    return otherWork;
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
     const { slug } = await params;
     const item = await getWorkItem(slug);
@@ -45,6 +64,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function WorkDetailPage({ params }: { params: { slug: string } }) {
     const { slug } = await params;
     const item = await getWorkItem(slug);
+    const otherWork = await getOtherWork(slug);
 
     if (!item) {
         notFound();
@@ -60,7 +80,12 @@ export default async function WorkDetailPage({ params }: { params: { slug: strin
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <Breadcrumbs />
+                <div className="flex justify-between items-start">
+                    <Breadcrumbs />
+                    <a href="/contact" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border border-[#8c7b64]/30 rounded-full text-[#8c7b64] font-mono text-xs hover:bg-[#8c7b64] hover:text-[#111] transition-colors">
+                        <span>NEED SOMETHING LIKE THIS?</span>
+                    </a>
+                </div>
 
                 <div className="mt-8 mb-24 space-y-8 border-b border-off-white/10 pb-12">
                     <div className="flex flex-col gap-4">
@@ -102,7 +127,7 @@ export default async function WorkDetailPage({ params }: { params: { slug: strin
 
                     {/* Main Content */}
                     <div className="lg:col-span-8">
-                        <div className="prose prose-invert prose-xl max-w-none text-off-white/80 font-serif leading-relaxed">
+                        <div className="prose prose-invert max-w-none text-off-white/90 font-sans leading-relaxed tracking-wide">
                             <DocumentRenderer
                                 document={item.content}
                                 componentBlocks={{
@@ -118,6 +143,36 @@ export default async function WorkDetailPage({ params }: { params: { slug: strin
                             />
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-32 border-t border-[#1a1a1a] pt-16">
+                <div className="flex justify-between items-end mb-8">
+                    <h2 className="font-serif text-3xl text-[#e5e5e5]">Other Selected Work</h2>
+                    <a href="/work" className="font-mono text-xs text-[#8c7b64] hover:text-[#e5e5e5] transition-colors">VIEW ALL</a>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Dynamic Related Work Items */}
+                    {otherWork.map(work => (
+                        <a key={work.slug} href={`/work/${work.slug}`} className="shine-effect group block p-8 border border-[#1a1a1a] hover:border-[#333] transition-colors relative overflow-hidden">
+                            <span className="font-mono text-xs text-[#666] mb-2 block uppercase tracking-widest">{work.entry.client}</span>
+                            <h3 className="font-serif text-2xl text-[#ccc] group-hover:text-[#e5e5e5] mb-4 transition-colors">{work.entry.title}</h3>
+                            <span className="font-mono text-xs text-[#8c7b64] opacity-0 group-hover:opacity-100 transition-opacity">VIEW CASE STUDY →</span>
+                        </a>
+                    ))}
+
+                    {/* Final "Inquire" Card - Improved */}
+                    <a href="/contact" className="shine-effect block p-8 border border-[#1a1a1a] hover:border-[#8c7b64]/30 group bg-[#8c7b64]/5 flex flex-col justify-between min-h-[200px] relative overflow-hidden">
+                        <div>
+                            <span className="font-mono text-xs text-[#8c7b64] mb-2 block uppercase tracking-widest">PARTNERSHIP</span>
+                            <h3 className="font-serif text-3xl text-[#e5e5e5] leading-none mb-2">Build Your Vision</h3>
+                            <p className="font-sans text-sm text-[#888] leading-relaxed max-w-xs">
+                                Let's architect your next breakthrough.
+                            </p>
+                        </div>
+                        <span className="font-mono text-xs text-[#8c7b64] mt-6 group-hover:translate-x-1 transition-transform inline-block">START A PROJECT →</span>
+                    </a>
                 </div>
             </div>
         </main>

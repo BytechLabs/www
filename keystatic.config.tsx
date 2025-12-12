@@ -1,10 +1,12 @@
 import { config, fields, collection, component } from '@keystatic/core';
 
 export default config({
-    storage: {
-        kind: 'github',
-        repo: 'bytechlabs/www',
-    },
+    storage: process.env.NODE_ENV === 'development'
+        ? { kind: 'local' }
+        : {
+            kind: 'github',
+            repo: 'bytechlabs/www',
+        },
     cloud: {
         project: 'bytechlabs/flagship',
     },

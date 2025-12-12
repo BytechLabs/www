@@ -86,7 +86,7 @@ export function ProjectFrame({
                         <span className="font-mono text-xs uppercase tracking-wider text-[#888]">{client}</span>
                     </div>
 
-                    <p className="font-serif text-sm text-[#888] leading-relaxed line-clamp-3 group-hover:text-[#aaa] transition-colors">
+                    <p className="font-sans text-base text-[#aaa] leading-relaxed line-clamp-3 group-hover:text-[#ccc] transition-colors">
                         {description}
                     </p>
 

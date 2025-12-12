@@ -40,7 +40,12 @@ export default async function ServicesPage() {
 
                 {/* Header */}
                 <div className="space-y-6">
-                    <Breadcrumbs />
+                    <div className="flex justify-between items-start">
+                        <Breadcrumbs />
+                        <a href="/contact" className="shine-effect hidden sm:inline-flex items-center gap-2 px-4 py-2 border border-[#8c7b64]/30 rounded-full text-[#8c7b64] font-mono text-xs hover:bg-[#8c7b64] hover:text-[#111] transition-colors relative overflow-hidden">
+                            <span>START A PROJECT</span>
+                        </a>
+                    </div>
                     <div className="border-l-2 border-off-white/20 pl-6 py-2">
                         <h1 className="font-serif text-6xl sm:text-8xl text-off-white">Capabilities</h1>
                         <p className="font-mono text-off-white/60 max-w-2xl text-lg mt-4">
@@ -66,7 +71,7 @@ export default async function ServicesPage() {
                                 </span>
                                 <div className="text-4xl opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500 origin-left">{s.entry.icon}</div>
                                 <h3 className="font-serif text-2xl text-off-white">{s.entry.title}</h3>
-                                <p className="text-off-white/70 leading-relaxed text-sm font-sans">{s.entry.description}</p>
+                                <p className="text-off-white/90 leading-relaxed font-sans">{s.entry.description}</p>
                             </div>
                         )) : (
                             // Fallback/Default Services if no CMS content

@@ -18,6 +18,7 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-cormorant)", "Georgia", "serif"],
         mono: ["var(--font-jetbrains)", "Courier New", "monospace"],
+        sans: ["var(--font-libre)", "Times New Roman", "serif"], // [MODIFIED] Mapped to Serif variable for global body style
       },
       typography: (theme: any) => ({
         DEFAULT: {
@@ -32,18 +33,20 @@ const config: Config = {
               color: theme('colors.off-white'),
               fontFamily: theme('fontFamily.serif').join(','),
               opacity: 1,
+              marginTop: '2.5em',
             },
             h2: {
               color: theme('colors.off-white'),
               fontFamily: theme('fontFamily.serif').join(','),
               opacity: 1,
-              marginTop: '2em',
+              marginTop: '2.5em',
               marginBottom: '1em',
             },
             h3: {
               color: theme('colors.off-white'),
               fontFamily: theme('fontFamily.serif').join(','),
               opacity: 0.9,
+              marginTop: '2em',
             },
             strong: {
               color: theme('colors.parchment'),

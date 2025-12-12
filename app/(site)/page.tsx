@@ -16,7 +16,7 @@ export default function Home() {
       {/* Option D: Illustrated Codex (Retained) */}
       <ServicesSection_Illustrated />
 
-      {/* PHASE 3: Selected Work */}
+      {/* PHASE 3: Our Work */}
       <WorkSection />
 
       {/* PHASE 4: The Correspondence (Option A) */}
