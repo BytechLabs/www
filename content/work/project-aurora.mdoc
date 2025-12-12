@@ -1,0 +1,38 @@
+---
+title: Project Aurora
+client: Global FinTech Consortium
+description: "A complete re-architecture of a legacy high-frequency trading platform, reducing latency by 400% and
+increasing throughput to 1.5M transactions per second."
+publishedDate: 2024-11-15
+techStack:
+- Rust
+- Linux Kernel
+- FPGA
+- Aeron
+industries:
+- finance
+---
+
+# The Challenge
+
+The client, a leading consortium in the global fintech space, was grappling with a legacy infrastructure that could no
+longer keep pace with the volatility of modern markets. Latency spikes during high-volume trading sessions were causing
+significant financial slippage.
+
+# The Solution
+
+We implemented a custom Rust-based matching engine, replacing the aging Java monolith. By leveraging zero-copy
+networking and kernel-bypass techniques, we achieved deterministic microsecond-level latency.
+
+{% Callout type="tip" %}
+**Technical Note**: We utilized DPDK for kernel bypass, allowing packets to move directly from the NIC to userspace
+memory without overhead.
+{% /Callout %}
+
+## Key Outcomes
+
+* **Latency Reduction**: 99th percentile latency dropped from 12ms to 45µs.
+* **Throughput**: System now handles 1.5M TPS with ease.
+* **Reliability**: Zero downtime recorded in the first 6 months of operation.
+
+{% InteractiveGraph title="System Efficiency Gains" /%}

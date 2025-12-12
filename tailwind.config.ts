@@ -19,9 +19,58 @@ const config: Config = {
         serif: ["var(--font-cormorant)", "Georgia", "serif"],
         mono: ["var(--font-jetbrains)", "Courier New", "monospace"],
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.off-white'),
+            opacity: 0.8,
+            maxWidth: '65ch',
+            '[class~="lead"]': {
+              color: theme('colors.parchment'),
+            },
+            h1: {
+              color: theme('colors.off-white'),
+              fontFamily: theme('fontFamily.serif').join(','),
+              opacity: 1,
+            },
+            h2: {
+              color: theme('colors.off-white'),
+              fontFamily: theme('fontFamily.serif').join(','),
+              opacity: 1,
+              marginTop: '2em',
+              marginBottom: '1em',
+            },
+            h3: {
+              color: theme('colors.off-white'),
+              fontFamily: theme('fontFamily.serif').join(','),
+              opacity: 0.9,
+            },
+            strong: {
+              color: theme('colors.parchment'),
+              fontWeight: '600',
+            },
+            code: {
+              color: theme('colors.parchment'),
+              fontFamily: theme('fontFamily.mono').join(','),
+            },
+            blockquote: {
+              borderLeftColor: theme('colors.parchment'),
+              color: theme('colors.off-white'),
+              fontStyle: 'italic',
+              opacity: 0.7,
+            },
+            'ul > li::marker': {
+              color: theme('colors.off-white'),
+              opacity: 0.5,
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default config;

@@ -3,7 +3,6 @@ import { ServicesSection_Glass } from "@/components/sections/ServicesSection_Gla
 import { ServicesSection_Illustrated } from "@/components/sections/ServicesSection_Illustrated";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { ContactSection_Letter } from "@/components/sections/ContactSection_Letter";
-import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
   return (
@@ -23,8 +22,7 @@ export default function Home() {
       {/* PHASE 4: The Correspondence (Option A) */}
       <ContactSection_Letter />
 
-      {/* PHASE 5: The Codex Footer */}
-      <Footer />
+      {/* PHASE 5: The Codex Footer (Moved to Global Layout) */}
     </main>
   );
 }

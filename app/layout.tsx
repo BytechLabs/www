@@ -4,6 +4,7 @@ import "./globals.css";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { NavigationSystem } from "@/components/layout/NavigationSystem";
+import { Footer } from "@/components/layout/Footer";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
 
         <SmoothScroll>
           {children}
+          <Footer />
         </SmoothScroll>
       </body>
     </html>

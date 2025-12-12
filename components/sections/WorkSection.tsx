@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { ProjectFrame } from "@/components/ui/ProjectFrame";
 import { motion } from "framer-motion";
 import { workData } from "@/config/work";
+import Link from 'next/link';
 import { MeasurementLine } from "@/components/ui/CodexOrnaments";
 
 export function WorkSection() {
@@ -71,16 +72,25 @@ export function WorkSection() {
 
                 {/* Curator's Note */}
                 <div className="mt-24 flex justify-center">
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                    <Link
+                        href="/work"
                         className="group flex flex-col items-center gap-2"
                     >
-                        <span className="font-serif italic text-[#888] group-hover:text-[#e5e5e5] transition-colors">
+                        <motion.span
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ delay: 1 }}
+                            className="font-serif italic text-[#888] group-hover:text-[#e5e5e5] transition-colors"
+                        >
                             View Full Archives
-                        </span>
-                        <div className="w-1 h-12 bg-[#333] group-hover:bg-[#8c7b64] transition-colors" />
-                    </motion.button>
+                        </motion.span>
+                        <motion.div
+                            initial={{ height: 0 }}
+                            whileInView={{ height: 48 }}
+                            transition={{ delay: 1, duration: 0.5 }}
+                            className="w-1 bg-[#333] group-hover:bg-[#8c7b64] transition-colors"
+                        />
+                    </Link>
                 </div>
 
             </Container>

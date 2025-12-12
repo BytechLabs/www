@@ -11,7 +11,7 @@ interface ProjectFrameProps {
     client: string;
     description: string;
     imageSrc: string;
-    techStack: string[];
+    techStack: readonly string[];
     folio: string;
     year: string;
     href?: string;

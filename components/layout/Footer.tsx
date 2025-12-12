@@ -25,7 +25,7 @@ export function Footer() {
                         {["Services", "Work", "About", "Contact"].map((item) => (
                             <a
                                 key={item}
-                                href={`#${item.toLowerCase()}`}
+                                href={item === "About" ? "/studio" : `/${item.toLowerCase()}`}
                                 className="font-mono text-sm text-[#888] hover:text-[#e5e5e5] transition-colors"
                             >
                                 {item}
