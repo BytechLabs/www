@@ -2,8 +2,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ContactSection_Letter } from "@/components/sections/ContactSection_Letter";
 
 export const metadata = {
-    title: "The Correspondence | BytechLabs",
-    description: "Initiate a dialogue. We are ready to listen.",
+    title: "Contact | BytechLabs",
+    description: "Get in touch with our team to discuss your next enterprise project.",
 };
 
 export default function ContactPage() {

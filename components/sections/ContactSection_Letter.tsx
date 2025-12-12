@@ -2,21 +2,41 @@
 
 import React, { useState } from "react";
 import { Container } from "@/components/layout/Container";
-import { WaxSealButton } from "@/components/ui/WaxSealButton";
-import { MeasurementLine } from "@/components/ui/CodexOrnaments";
 import { motion } from "framer-motion";
 
 export function ContactSection_Letter() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setIsSubmitting(true);
-        // Simulate network request
-        setTimeout(() => {
+        setIsError(false);
+
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('https://formspree.io/f/movgyagg', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setIsSuccess(true);
+                form.reset();
+            } else {
+                setIsError(true);
+            }
+        } catch (error) {
+            setIsError(true);
+        } finally {
             setIsSubmitting(false);
-            setIsSuccess(true);
-        }, 2000);
+        }
     };
 
     return (
@@ -33,7 +53,7 @@ export function ContactSection_Letter() {
                         className="mb-4"
                     >
                         <span className="font-mono text-[#8c7b64] text-xs uppercase tracking-[0.3em]">
-                            The Correspondence
+                            Get in Touch
                         </span>
                     </motion.div>
 
@@ -43,11 +63,14 @@ export function ContactSection_Letter() {
                         viewport={{ once: true }}
                         className="font-serif text-4xl sm:text-5xl text-[#e5e5e5]"
                     >
-                        Write to the Guild
+                        Start a Conversation
                     </motion.h2>
+                    <p className="font-sans text-off-white/60 mt-4 max-w-2xl">
+                        Ready to discuss your next project? Fill out the form below and our team will get back to you within 24 hours.
+                    </p>
                 </div>
 
-                {/* Perspective Paper Container */}
+                {/* Form Container */}
                 <div className="relative w-full p-8 md:p-16 bg-[#111] border border-[#222] shadow-2xl">
 
                     {/* Decorative Corner Marks */}
@@ -56,79 +79,127 @@ export function ContactSection_Letter() {
                     <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-[#8c7b64]/30" />
                     <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-[#8c7b64]/30" />
 
-                    {/* The Form Letters */}
-                    <div className="flex flex-col gap-12 font-serif text-lg md:text-xl text-[#ccc] leading-relaxed">
-
-                        {/* Salutation */}
-                        <div className="flex flex-wrap items-baseline gap-4">
-                            <span>To the Masters of BytechLabs,</span>
+                    {isSuccess ? (
+                        <div className="text-center py-12">
+                            <div className="text-[#8c7b64] text-5xl mb-4">✓</div>
+                            <h3 className="font-serif text-2xl text-off-white mb-2">Message Sent Successfully</h3>
+                            <p className="font-sans text-off-white/60">We'll be in touch shortly.</p>
+                            <button
+                                onClick={() => setIsSuccess(false)}
+                                className="mt-8 font-mono text-sm text-[#8c7b64] hover:text-off-white transition-colors"
+                            >
+                                Send Another Message
+                            </button>
                         </div>
-
-                        {/* Identity Inputs */}
-                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-8">
-                            <span>I am</span>
-                            <div className="flex-1 min-w-[200px] relative group">
-                                <input
-                                    type="text"
-                                    placeholder="Your Name"
-                                    className="w-full bg-transparent border-b border-[#333] pb-2 outline-none text-[#e5e5e5] placeholder:text-[#444] group-hover:border-[#8c7b64] transition-colors font-mono text-base"
-                                />
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            {/* Name & Company */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="name" className="block font-mono text-xs uppercase tracking-widest text-[#8c7b64] mb-3">
+                                        Your Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        required
+                                        className="w-full bg-transparent border-b border-[#333] pb-3 outline-none text-[#e5e5e5] placeholder:text-[#444] hover:border-[#8c7b64] focus:border-[#8c7b64] transition-colors font-sans"
+                                        placeholder="John Doe"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="company" className="block font-mono text-xs uppercase tracking-widest text-[#8c7b64] mb-3">
+                                        Company
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="company"
+                                        name="company"
+                                        className="w-full bg-transparent border-b border-[#333] pb-3 outline-none text-[#e5e5e5] placeholder:text-[#444] hover:border-[#8c7b64] focus:border-[#8c7b64] transition-colors font-sans"
+                                        placeholder="Acme Corp"
+                                    />
+                                </div>
                             </div>
-                            <span>, representing</span>
-                            <div className="flex-1 min-w-[200px] relative group">
-                                <input
-                                    type="text"
-                                    placeholder="Company / Organization"
-                                    className="w-full bg-transparent border-b border-[#333] pb-2 outline-none text-[#e5e5e5] placeholder:text-[#444] group-hover:border-[#8c7b64] transition-colors font-mono text-base"
-                                />
-                            </div>
-                        </div>
 
-                        {/* Contact Input */}
-                        <div className="flex flex-wrap items-baseline gap-4">
-                            <span>You can correspond with me at</span>
-                            <div className="flex-1 min-w-[240px] relative group">
+                            {/* Email */}
+                            <div>
+                                <label htmlFor="email" className="block font-mono text-xs uppercase tracking-widest text-[#8c7b64] mb-3">
+                                    Email Address *
+                                </label>
                                 <input
                                     type="email"
-                                    placeholder="email@address.com"
-                                    className="w-full bg-transparent border-b border-[#333] pb-2 outline-none text-[#e5e5e5] placeholder:text-[#444] group-hover:border-[#8c7b64] transition-colors font-mono text-base"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    className="w-full bg-transparent border-b border-[#333] pb-3 outline-none text-[#e5e5e5] placeholder:text-[#444] hover:border-[#8c7b64] focus:border-[#8c7b64] transition-colors font-sans"
+                                    placeholder="john@example.com"
                                 />
                             </div>
-                            <span>.</span>
-                        </div>
 
-                        {/* Message Body */}
-                        <div className="flex flex-col gap-4">
-                            <span>I wish to discuss:</span>
-                            <div className="relative group">
+                            {/* Industry */}
+                            <div>
+                                <label htmlFor="industry" className="block font-mono text-xs uppercase tracking-widest text-[#8c7b64] mb-3">
+                                    Industry
+                                </label>
+                                <select
+                                    id="industry"
+                                    name="industry"
+                                    className="w-full bg-[#111] border-b border-[#333] pb-3 outline-none text-[#e5e5e5] hover:border-[#8c7b64] focus:border-[#8c7b64] transition-colors font-sans"
+                                >
+                                    <option value="">Select your industry</option>
+                                    <option value="fintech">FinTech / Financial Services</option>
+                                    <option value="healthcare">Healthcare / MedTech</option>
+                                    <option value="ecommerce">E-Commerce / Retail</option>
+                                    <option value="saas">SaaS / Enterprise Software</option>
+                                    <option value="logistics">Logistics / Supply Chain</option>
+                                    <option value="education">Education / EdTech</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            {/* Message */}
+                            <div>
+                                <label htmlFor="message" className="block font-mono text-xs uppercase tracking-widest text-[#8c7b64] mb-3">
+                                    Project Details *
+                                </label>
                                 <textarea
-                                    rows={4}
-                                    placeholder="The nature of your inquiry..."
-                                    className="w-full bg-transparent border-b border-[#333] pb-2 outline-none text-[#e5e5e5] placeholder:text-[#444] group-hover:border-[#8c7b64] transition-colors resize-none font-mono text-base leading-relaxed"
+                                    id="message"
+                                    name="message"
+                                    required
+                                    rows={6}
+                                    className="w-full bg-transparent border border-[#333] p-4 outline-none text-[#e5e5e5] placeholder:text-[#444] hover:border-[#8c7b64] focus:border-[#8c7b64] transition-colors resize-none font-sans leading-relaxed"
+                                    placeholder="Tell us about your project, timeline, and any specific requirements..."
                                 />
                             </div>
-                        </div>
 
-                        {/* Sign-off */}
-                        <div className="w-full flex justify-end mt-12 relative">
-                            {/* Ornamental Pointer Line */}
-                            <div className="absolute right-32 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none hidden sm:flex">
-                                <span className="font-mono text-[#444] text-[10px] uppercase tracking-widest">Click to Affix</span>
-                                <div className="w-16 h-px bg-[#333]" />
-                                <div className="w-2 h-2 rounded-full border border-[#333]" />
+                            {/* Honeypot (spam protection) */}
+                            <input type="text" name="_gotcha" style={{ display: 'none' }} />
+
+                            {/* Error Message */}
+                            {isError && (
+                                <div className="text-red-400 text-sm font-mono">
+                                    Something went wrong. Please try again or email us directly at contact@bytechlabs.com
+                                </div>
+                            )}
+
+                            {/* Submit Button */}
+                            <div className="flex justify-end pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="group relative px-12 py-4 bg-[#8c7b64] text-ink font-mono text-sm uppercase tracking-widest hover:bg-[#a39075] transition-colors disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                                >
+                                    <span className="relative z-10">
+                                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                                    </span>
+                                    {!isSubmitting && (
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                                    )}
+                                </button>
                             </div>
-
-                            <div className="flex flex-col items-center z-10">
-                                <span className="mb-4 italic text-[#666] font-serif">Sincerely,</span>
-                                <WaxSealButton
-                                    onClick={handleSubmit}
-                                    isSubmitting={isSubmitting}
-                                    isSuccess={isSuccess}
-                                />
-                            </div>
-                        </div>
-
-                    </div>
+                        </form>
+                    )}
 
                 </div>
 

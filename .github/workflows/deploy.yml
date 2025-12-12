@@ -34,8 +34,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm run build
+      # Remove API routes (not compatible with static export)
+      - name: Remove API routes
+        run: rm -rf app/api
+
+      - name: Build with Next.js
+        run: pnpm build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
